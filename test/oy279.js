@@ -46,8 +46,8 @@ describe('Website Up ', function () {
 
     it("Login Test User", async () => {
         //let elements = await driver.getPageSource()
-        await driver.wait(until.elementLocated(By.id("email")), 3000).sendKeys("user1@cms.hhs.local");
-        await driver.wait(until.elementLocated(By.id("password")), 3000).sendKeys("Passw0rd!");
+        await driver.wait(until.elementLocated(By.id("email")), 3000).sendKeys(process.env.DEMOUSER);
+        await driver.wait(until.elementLocated(By.id("password")), 3000).sendKeys(process.env.DEMOPASS);
         await driver.wait(until.elementLocated(By.id("loginDevUserBtn")), 3000).click();
         await driver.wait(until.elementLocated(By.id("spaSubmitBtn")), 3000).click();
 

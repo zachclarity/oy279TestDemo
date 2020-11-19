@@ -13,6 +13,9 @@ Test on unix with:  which chromedriver.
 Then:
 
 npm install
+
+export DEMOUSER=<demo user>
+export DEMOPASS=<demo pass>
 npm test
 
 > cmstest@1.0.0 test /Users/zachlewis/mywork/cmswork/oy279TestDemo
