@@ -15,8 +15,9 @@ Then:
 npm install
 
 
-NOTE: Set two environment vars to your web test user and test password:
+NOTE: Set three environment vars to your web test user and test password:
 
+-- export DEMOURL=<URL to Test Site>
 -- export DEMOUSER=<demo user>
 -- export DEMOPASS=<demo pass>
 
