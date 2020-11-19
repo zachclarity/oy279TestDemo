@@ -20,7 +20,7 @@ describe('Website Up ', function () {
 
     it("Website Up and Running", async () => {
         try {
-            await driver.get('https://d3jjud0ztowjay.cloudfront.net');
+            await driver.get(process.env.DEMOURL);
             assert.ok("Site up")
         } catch {
             assert.fail("Web Failed")
