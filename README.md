@@ -14,8 +14,14 @@ Then:
 <PRE>
 npm install
 
-export DEMOUSER=<demo user>
-export DEMOPASS=<demo pass>
+
+NOTE: Set two environment vars to your web test user and test password:
+
+-- export DEMOUSER=<demo user>
+-- export DEMOPASS=<demo pass>
+
+Start Test:
+
 npm test
 
 > cmstest@1.0.0 test /Users/zachlewis/mywork/cmswork/oy279TestDemo
