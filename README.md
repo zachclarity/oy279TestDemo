@@ -11,7 +11,7 @@ Set Environment PATH to include chromdriver.
 Test on unix with:  which chromedriver.
 
 Then:
-
+<PRE>
 npm install
 npm test
 
@@ -48,4 +48,5 @@ npm test
 
 
   9 passing (4s)
+  </PRE>
 
