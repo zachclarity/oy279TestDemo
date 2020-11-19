@@ -11,7 +11,7 @@ Set Environment PATH to include chromdriver.
 Test on unix with:  which chromedriver.
 
 Then:
-
+<PRE>
 npm install
 
 export DEMOUSER=<demo user>
@@ -51,4 +51,5 @@ npm test
 
 
   9 passing (4s)
+  </PRE>
 
