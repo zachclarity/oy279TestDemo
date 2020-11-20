@@ -10,10 +10,20 @@ const {Builder, By, Key, until} = require('selenium-webdriver');
 const waiverIdFormat = "The Waiver ID must be in the format of SS.##.R##.M## or SS.####.R##.## !"
 const spaIdFormat = "The SPA ID must be in the format of SS-YY-NNNN or SS-YY-NNNN-xxxx !"
 
+async function isFoundElement(elementIdString) {
+    try {
+        await driver.findElement(By.id(elementIdString))
+        console.log("[***DEBUG***] Should Not be found: (" + elementIdString + ")")
+        return true
+    } catch {
+        return false
+    }
+}
+
 //.setChromeOptions(new chrome.Options().headless())
 let driver = new Builder()
     .forBrowser('chrome')
-    .setChromeOptions(new chrome.Options().headless())
+    //.setChromeOptions(new chrome.Options().headless())
     .build();
 
 describe('Website Up ', function () {
@@ -61,10 +71,47 @@ describe('Check Spa Error Message ', function () {
         await driver.wait(until.elementLocated(By.id("territory")), 3000).click()
         await driver.wait(until.elementLocated(By.id("territory")), 3000).sendKeys("A");
         await driver.wait(until.elementLocated(By.id("territory")), 3000).click()
-        await driver.wait(until.elementLocated(By.id("transmittalNumber")), 3000).sendKeys("e")
-        const errorstr = await driver.wait(until.elementLocated(By.id("spaTransmittalNumberErrorMsg")), 5000).getText()
+        await driver.wait(until.elementLocated(By.id("transmittalNumber")), 3000).sendKeys("A")
+        let errorstr = await driver.wait(until.elementLocated(By.id("spaTransmittalNumberErrorMsg")), 5000).getText()
         console.log("[***DEBUG***] " + errorstr)
         expect(errorstr).to.equal(spaIdFormat);
+
+    })
+
+})
+
+describe('Check Spa ID Valid Entry Error Message ', function () {
+
+    it("SPA ID Valid Entry Error Message", async () => {
+        await driver.wait(until.elementLocated(By.id("dashboardLink")), 3000).click();
+        await driver.wait(until.elementLocated(By.id("spaSubmitBtn")), 3000).click();
+        await driver.wait(until.elementLocated(By.id("territory")), 3000).click()
+        await driver.wait(until.elementLocated(By.id("territory")), 3000).sendKeys("A");
+        await driver.wait(until.elementLocated(By.id("territory")), 3000).click()
+        await driver.wait(until.elementLocated(By.id("transmittalNumber")), 3000).sendKeys("AL-22-2222")
+        const found = await isFoundElement("spaTransmittalNumberErrorMsg")
+        console.log("[***DEBUG***] " + found)
+        if ( found) {
+            assert.fail()
+        }
+    })
+
+})
+
+describe('Check Spa ID Valid #2 Entry Error Message ', function () {
+
+    it("SPA ID Valid Entry Error Message", async () => {
+        await driver.wait(until.elementLocated(By.id("dashboardLink")), 3000).click();
+        await driver.wait(until.elementLocated(By.id("spaSubmitBtn")), 3000).click();
+        await driver.wait(until.elementLocated(By.id("territory")), 3000).click()
+        await driver.wait(until.elementLocated(By.id("territory")), 3000).sendKeys("A");
+        await driver.wait(until.elementLocated(By.id("territory")), 3000).click()
+        await driver.wait(until.elementLocated(By.id("transmittalNumber")), 3000).sendKeys("AL-22-2222-2222")
+        const found = await isFoundElement("spaTransmittalNumberErrorMsg")
+        console.log("[***DEBUG***] " + found)
+        if ( found) {
+            assert.fail()
+        }
 
     })
 
@@ -75,10 +122,26 @@ describe('Check Spa RAI Transmittal Error Message  Check', function () {
     it("Spa RAI Form Error Message", async () => {
         await driver.wait(until.elementLocated(By.id("dashboardLink")), 3000).click();
         await driver.wait(until.elementLocated(By.id("spaRaiBtn")), 3000).click();
-        await driver.wait(until.elementLocated(By.id("transmittalNumber")), 3000).sendKeys("e")
+        await driver.wait(until.elementLocated(By.id("transmittalNumber")), 3000).sendKeys("A")
         const errorstr = await driver.wait(until.elementLocated(By.id("raiTransmittalNumError")), 5000).getText()
         console.log("[***DEBUG***] " + errorstr)
         expect(errorstr).to.equal(spaIdFormat);
+
+    })
+
+})
+
+describe('Check Spa RAI Transmittal Valid No Error Message  Check', function () {
+
+    it("Spa RAI Valid No Error Message", async () => {
+        await driver.wait(until.elementLocated(By.id("dashboardLink")), 3000).click();
+        await driver.wait(until.elementLocated(By.id("spaRaiBtn")), 3000).click();
+        await driver.wait(until.elementLocated(By.id("transmittalNumber")), 3000).sendKeys("AL-22-2222-2222")
+        const found = await isFoundElement("raiTransmittalNumError")
+        console.log("[***DEBUG***] " + found)
+        if ( found) {
+            assert.fail()
+        }
 
     })
 
@@ -96,7 +159,7 @@ describe('Waiver Transmittal Error Message Check ', function () {
         await driver.wait(until.elementLocated(By.id("transmittalNumber")), 3000).sendKeys("e")
         const errorstr = await driver.wait(until.elementLocated(By.id("waiverTransmittalError")), 5000).getText()
         console.log("[***DEBUG***] " + errorstr)
-       // expect(errorstr).to.equal(waiverIdFormat);
+        expect(errorstr).to.equal(waiverIdFormat);
 
     })
 
@@ -130,6 +193,6 @@ describe('Check Waiver Extension Transmittal Error Message  Check', function () 
 
 })
 
-after(function() {
+after(function () {
     driver.close();
 })
