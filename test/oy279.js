@@ -23,7 +23,7 @@ async function isFoundElement(elementIdString) {
 //.setChromeOptions(new chrome.Options().headless())
 let driver = new Builder()
     .forBrowser('chrome')
-    //.setChromeOptions(new chrome.Options().headless())
+    .setChromeOptions(new chrome.Options().headless())
     .build();
 
 describe('Website Up ', function () {
@@ -60,7 +60,6 @@ describe('Website Up ', function () {
         await driver.wait(until.elementLocated(By.id("password")), 3000).sendKeys(process.env.DEMOPASS);
         await driver.wait(until.elementLocated(By.id("loginDevUserBtn")), 3000).click();
         await driver.wait(until.elementLocated(By.id("spaSubmitBtn")), 3000).click();
-
     })
 
 })
@@ -91,7 +90,7 @@ describe('Check Spa ID Valid Entry Error Message ', function () {
         await driver.wait(until.elementLocated(By.id("transmittalNumber")), 3000).sendKeys("AL-22-2222")
         const found = await isFoundElement("spaTransmittalNumberErrorMsg")
         console.log("[***DEBUG***] " + found)
-        if ( found) {
+        if (found) {
             assert.fail()
         }
     })
@@ -109,7 +108,7 @@ describe('Check Spa ID Valid #2 Entry Error Message ', function () {
         await driver.wait(until.elementLocated(By.id("transmittalNumber")), 3000).sendKeys("AL-22-2222-2222")
         const found = await isFoundElement("spaTransmittalNumberErrorMsg")
         console.log("[***DEBUG***] " + found)
-        if ( found) {
+        if (found) {
             assert.fail()
         }
 
@@ -139,7 +138,7 @@ describe('Check Spa RAI Transmittal Valid No Error Message  Check', function () 
         await driver.wait(until.elementLocated(By.id("transmittalNumber")), 3000).sendKeys("AL-22-2222-2222")
         const found = await isFoundElement("raiTransmittalNumError")
         console.log("[***DEBUG***] " + found)
-        if ( found) {
+        if (found) {
             assert.fail()
         }
 
@@ -165,6 +164,22 @@ describe('Waiver Transmittal Error Message Check ', function () {
 
 })
 
+describe('Check Waiver Valid Transmittal No Error Message  Check', function () {
+
+    it("Waiver Extension Form Error Message", async () => {
+        await driver.wait(until.elementLocated(By.id("dashboardLink")), 3000).click();
+        await driver.wait(until.elementLocated(By.id("waiverBtn")), 3000).click();
+        await driver.wait(until.elementLocated(By.id("transmittalNumber")), 3000).sendKeys("AL.22.R22.M22")
+        const found = await isFoundElement("waiverTransmittalError")
+        console.log("[***DEBUG***] " + found)
+        if (found) {
+            assert.fail()
+        }
+
+    })
+})
+
+
 describe('Check Waiver RAI Transmittal Error Message  Check', function () {
 
     it("Waiver RAI Form Error Message", async () => {
@@ -177,6 +192,21 @@ describe('Check Waiver RAI Transmittal Error Message  Check', function () {
 
     })
 
+})
+
+describe('Check Waiver RAI Valid Transmittal No Error Message  Check', function () {
+
+    it("Waiver Extension Form Error Message", async () => {
+        await driver.wait(until.elementLocated(By.id("dashboardLink")), 3000).click();
+        await driver.wait(until.elementLocated(By.id("waiverRaiBtn")), 3000).click();
+        await driver.wait(until.elementLocated(By.id("transmittalNumber")), 3000).sendKeys("AL.22.R22.M22")
+        const found = await isFoundElement("raiTransmittalNumError")
+        console.log("[***DEBUG***] " + found)
+        if (found) {
+            assert.fail()
+        }
+
+    })
 })
 
 describe('Check Waiver Extension Transmittal Error Message  Check', function () {
@@ -193,6 +223,22 @@ describe('Check Waiver Extension Transmittal Error Message  Check', function () 
 
 })
 
+describe('Check Waiver Extension Valid Transmittal No Error Message  Check', function () {
+
+    it("Waiver Extension Form No Error Message", async () => {
+        await driver.wait(until.elementLocated(By.id("dashboardLink")), 3000).click();
+        await driver.wait(until.elementLocated(By.id("waiverExtBtn")), 3000).click();
+        await driver.wait(until.elementLocated(By.id("transmittalNumber")), 3000).sendKeys("AL.22.R22.M22")
+        const found = await isFoundElement("waiverExtTransmittalNumError")
+        console.log("[***DEBUG***] " + found)
+        if (found) {
+            assert.fail()
+        }
+
+    })
+})
+
 after(function () {
     driver.close();
 })
+
