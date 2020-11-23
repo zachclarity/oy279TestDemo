@@ -74,6 +74,9 @@ describe('Check Spa Error Message ', function () {
         let errorstr = await driver.wait(until.elementLocated(By.id("spaTransmittalNumberErrorMsg")), 5000).getText()
         console.log("[***DEBUG***] " + errorstr)
         expect(errorstr).to.equal(spaIdFormat);
+        let disabled = await driver.wait(until.elementLocated(By.id("spaSubmitButton")), 3000).getAttribute("disabled")
+        expect(disabled).to.equal("true")
+        console.log("Submit Disabled:" + disabled)
 
     })
 
@@ -159,6 +162,9 @@ describe('Waiver Transmittal Error Message Check ', function () {
         const errorstr = await driver.wait(until.elementLocated(By.id("waiverTransmittalError")), 5000).getText()
         console.log("[***DEBUG***] " + errorstr)
         expect(errorstr).to.equal(waiverIdFormat);
+        let disabled = await driver.wait(until.elementLocated(By.id("waiverSubmitButton")), 3000).getAttribute("disabled")
+        expect(disabled).to.equal("true")
+        console.log("Submit Disabled:" + disabled)
 
     })
 
